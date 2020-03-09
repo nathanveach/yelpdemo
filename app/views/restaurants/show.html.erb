@@ -1,6 +1,5 @@
 <div class="row">
 	<div class="col-md-3">
-		<p id="notice"><%= notice %></p>
 
 		<%= image_tag @restaurant.image_url %>
 		<h2>
@@ -31,23 +30,30 @@
 		<% if @reviews.blank? %>
 			<h3>No reviews yet. Be the first to write one!</h3>
 		<% else %>
-		<table class="table">
-			<tbody>	
-				<% @reviews.each do |review| %>
-					<tr>
-						<td>							
-							<div class="star-rating" data-score= <%= review.rating %> ></div>
-							<p><%= h(review.comment).gsub(/\n/, '<br/>').html_safe %></p>
-						</td>
-					</tr>
-			<% end %>
-			</tbody>
-		</table>
+			<table class="table">
+				<tbody>	
+					<% @reviews.each do |review| %>
+						<tr>
+							<td>
+								<h4>
+									<%= "#{review.user.first_name.capitalize} #{review.user.last_name.capitalize[0]}." %>
+								</h4>
+								<p><%= review.created_at.strftime("%-m/%-d/%y") %></p>
+							</td>
+							<td>							
+								<div class="star-rating" data-score= <%= review.rating %> ></div>
+								<p><%= h(review.comment).gsub(/\n/, '<br/>').html_safe %></p>
+							</td>
+						</tr>
+				<% end %>
+				</tbody>
+			</table>
 		<% end %>
 	</div>
+</div>
 	<%= link_to 'Edit', edit_restaurant_path(@restaurant), class: 'btn btn-link' %> |
 	<%= link_to 'Back', restaurants_path, class: 'btn btn-link' %>
-</div>
+
 
 <script>
 	$('.star-rating').raty({
